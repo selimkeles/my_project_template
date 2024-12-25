@@ -1,21 +1,37 @@
 {
-  "configurations": [
-      {
-          "name": "Win32",
-          "includePath": [
-              "${workspaceFolder}/include/**",
-              "${workspaceFolder}/lib/**"
-          ],
-          "defines": [
-              "_DEBUG",
-              "UNICODE",
-              "_UNICODE"
-          ],
-          "compilerPath": "C:/mingw/bin/gcc.exe",
-          "cStandard": "c11",
-          "cppStandard": "c++17",
-          "intelliSenseMode": "windows-gcc-x64"
-      }
-  ],
-  "version": 4
+    "enableConfigurationSquiggles": true,
+    "env": {
+        "Project_Include": [
+            "${workspaceFolder}/**",
+            "/Path/to/your/include/folder"
+        ],
+        "Project_Browse": [
+            "${workspaceFolder}/",
+            "/Path/to/your/browse/folder"
+        ]
+    },
+    "configurations": [
+        {
+            "name": "Win32",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/**",
+                    "${MSP_Browse}"
+                ]
+            },
+            "forcedInclude": [
+                "C:/ti/ccs1271/ccs/ccs_base/msp430/include/msp430f5419A.h"
+            ],
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${MSP_Include}"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ]
+        }
+    ],
+    "version": 4
 }
