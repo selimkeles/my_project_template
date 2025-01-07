@@ -2,144 +2,68 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "pre-build",
+            "label": "Build",
             "type": "shell",
-            "command": "powershell",
-            "args": [
-                "-NoProfile",
-                "-ExecutionPolicy",
-                "Bypass",
-                "-Command",
-                "Write-Host 'Pre-build task for project: ${env:PROJECT_NAME}'; gcc --version; Get-ChildItem -Path . -Filter *.c -Recurse"
-            ],
-            "problemMatcher": []
-        },
-        {
-            "label": "Build Debug",
-            "type": "shell",
-            "command": "gcc",
-            "args": [
-                "-Wall",
-                "-Wextra",
-                "-Wpedantic",
-                "-g",
-                "-o",
-                "${workspaceFolder}/Build/debug/${workspaceFolderBasename}_debug.exe",
-                "Get-ChildItem -Path ${workspaceFolder}/src -Filter *.c -Recurse | ForEach-Object { $_.FullName }"
-            ],
+            "command": "make",
+            "args": ["all"],
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
-            "presentation": {
-                "reveal": "always",
-                "echo": true,
-                "showReuseMessage": true,
-                "clear": true
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": ["absolute"],
+                "pattern": {
+                    "regexp": "^(.*):([0-9]+):([0-9]+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
             },
-            "problemMatcher": "$gcc"
+            "detail": "Build the main project"
         },
         {
-            "label": "Build Release",
+            "label": "Test",
             "type": "shell",
-            "command": "gcc",
-            "args": [
-                "-Wall",
-                "-Wextra",
-                "-Wpedantic",
-                "-O2", // Optimization level for release
-                "-o",
-                "${workspaceFolder}/Build/release/${workspaceFolderBasename}_release.exe",
-                "$(Get-ChildItem -Path ${workspaceFolder}/src -Filter *.c -Recurse | ForEach-Object { $_.FullName })"
-            ],
+            "command": "make",
+            "args": ["test"],
+            "group": "test",
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": ["absolute"],
+                "pattern": {
+                    "regexp": "^(.*):([0-9]+):([0-9]+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            },
+            "detail": "Build and run tests"
+        },
+        {
+            "label": "Clean",
+            "type": "shell",
+            "command": "make",
+            "args": ["clean"],
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "Clean the build directory"
+        },
+        {
+            "label": "Debug",
+            "type": "shell",
+            "command": "make",
+            "args": ["debug"],
             "group": {
                 "kind": "build",
                 "isDefault": false
             },
-            "presentation": {
-                "reveal": "always",
-                "echo": true,
-                "showReuseMessage": true,
-                "clear": true
-            },
-            "problemMatcher": "$gcc"
-        },
-        {
-            "label": "Build Test",
-            "type": "shell",
-            "command": "gcc",
-            "args": [
-                "-Wall",
-                "-Wextra",
-                "-Wpedantic",
-                "-g",
-                "-o",
-                "${workspaceFolder}/Build/test/${workspaceFolderBasename}_test.exe",
-                "$(Get-ChildItem -Path ${workspaceFolder}/src -Filter *.c -Recurse | ForEach-Object { $_.FullName })",
-                "$(Get-ChildItem -Path ${workspaceFolder}/tests -Filter *.c -Recurse | ForEach-Object { $_.FullName })",
-                "!${workspaceFolder}/src/main.c",
-                "-I",
-                "${workspaceFolder}/include"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": false
-            },
-            "presentation": {
-                "reveal": "always",
-                "echo": true,
-                "showReuseMessage": true,
-                "clear": true
-            },
-            "problemMatcher": "$gcc"
-        },
-        {
-            "label": "Run Debug",
-            "type": "shell",
-            "command": "${workspaceFolder}/Build/debug/${workspaceFolderBasename}_debug.exe",
-            "args": [],
-            "group": {
-                "kind": "test",
-                "isDefault": true
-            },
-            "presentation": {
-                "reveal": "always",
-                "echo": true,
-                "showReuseMessage": true,
-                "clear": true
-            }
-        },
-        {
-            "label": "Run Release",
-            "type": "shell",
-            "command": "${workspaceFolder}/Build/release/${workspaceFolderBasename}_release.exe",
-            "args": [],
-            "group": {
-                "kind": "test",
-                "isDefault": false
-            },
-            "presentation": {
-                "reveal": "always",
-                "echo": true,
-                "showReuseMessage": true,
-                "clear": true
-            }
-        },
-        {
-            "label": "Run Tests",
-            "type": "shell",
-            "command": "${workspaceFolder}/Build/test/${workspaceFolderBasename}_test.exe",
-            "args": [],
-            "group": {
-                "kind": "test",
-                "isDefault": false
-            },
-            "presentation": {
-                "reveal": "always",
-                "echo": true,
-                "showReuseMessage": true,
-                "clear": true
-            }
+            "problemMatcher": ["$gcc"],
+            "detail": "Prepare for debugging"
         }
     ]
 }
