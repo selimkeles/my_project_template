@@ -2,12 +2,15 @@
     "enableConfigurationSquiggles": true,
     "env": {
         "Project_Include": [
-            "${workspaceFolder}/**",
-            "/Path/to/your/include/folder"
+            "${workspaceFolder}/**"
+            // ,"/Path/to/your/include/folder"
         ],
         "Project_Browse": [
-            "${workspaceFolder}/",
-            "/Path/to/your/browse/folder"
+            "${workspaceFolder}/"
+            // ,"/Path/to/your/browse/folder"
+        ],
+        "Project_Forced_Include":[
+            // "/Path/to/your/forced/include/file"
         ]
     },
     "configurations": [
@@ -16,15 +19,15 @@
             "browse": {
                 "path": [
                     "${workspaceFolder}/**",
-                    "${MSP_Browse}"
+                    "${Project_Browse}"
                 ]
             },
             "forcedInclude": [
-                "C:/ti/ccs1271/ccs/ccs_base/msp430/include/msp430f5419A.h"
+                "${Project_Forced_Include}"
             ],
             "includePath": [
                 "${workspaceFolder}/**",
-                "${MSP_Include}"
+                "${Project_Include}"
             ],
             "defines": [
                 "_DEBUG",

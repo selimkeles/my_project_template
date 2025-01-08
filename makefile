@@ -19,6 +19,7 @@ endif
 # Directories
 BUILD_DIR = build
 SRC_DIR = src
+SRC_EXCLUDE_MAIN = $(filter-out main.c, $(SRC_DIR))
 INCLUDE_DIR = include
 TESTS_DIR = tests
 LIB_DIR = lib
@@ -29,8 +30,10 @@ LIBS = $(wildcard $(LIB_DIR)/*.c)
 TESTS = $(wildcard $(TESTS_DIR)/*.c)
 HEADERS = $(wildcard $(INCLUDE_DIR)/*.h)
 
+# Project Name
+PROJECT_NAME := $(notdir $(realpath $(dir $(lastword $(MAKEFILE_LIST)))))
 # Targets
-TARGET = $(BUILD_DIR)/my_project$(EXE)
+TARGET = $(BUILD_DIR)/$(PROJECT_NAME)$(EXE)
 TEST_TARGET = $(BUILD_DIR)/tests$(EXE)
 
 # Compiler Flags
@@ -41,15 +44,15 @@ all: $(TARGET)
 
 # Build the main executable
 $(TARGET): $(SRCS) $(HEADERS) $(LIBS)
-	@mkdir -p $(BUILD_DIR)
+	if not exist "$(BUILD_DIR)" mkdir "$(BUILD_DIR)"
 	$(CC) $(CFLAGS) $(DEBUGFLAGS) -o $@ $(SRCS)
 
 # Build and run tests
 test: $(TEST_TARGET)
 	./$(TEST_TARGET)
 
-$(TEST_TARGET): $(TESTS) $(HEADERS)
-	@mkdir -p $(BUILD_DIR)
+$(TEST_TARGET): $(SRC_EXCLUDE_MAIN) $(TESTS) $(HEADERS) $(LIBS)
+	if not exist "$(BUILD_DIR)" mkdir "$(BUILD_DIR)"
 	$(CC) $(CFLAGS) $(DEBUGFLAGS) -o $@ $(TESTS)
 
 # Clean build directory

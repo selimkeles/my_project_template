@@ -12,6 +12,12 @@ The project is organized into the following directories:
 my_project/
 ├── LICENSE                     # License information for the project
 ├── README.md                   # This file - Project overview and setup instructions
+├── makefile                    # Makefile
+├── build                       # executables of the project
+│   ├── test
+│   ├── debug
+│   └── release
+│       └── Vx.x
 ├── include                     # Header files for the project
 │   ├── ccronexpr.h
 │   └── some_sub_folder
