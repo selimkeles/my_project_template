@@ -6,7 +6,7 @@
             "type": "shell",
             "command": "mkdir -p build; cd build; cmake -G 'MinGW Makefiles' -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ ..",
             "problemMatcher": [],
-            "detail": "Task to configure CMake",
+            "detail": "Task to configure CMake for Build",
             "hide": true
         },
         {
@@ -14,7 +14,15 @@
             "type": "shell",
             "command": "mkdir -p build; cd build; cmake -G 'MinGW Makefiles' -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_BUILD_TYPE=Debug ..",
             "problemMatcher": [],
-            "detail": "Task to configure CMake",
+            "detail": "Task to configure CMake for Debug",
+            "hide": true,
+        },
+        {
+            "label": "Configure CMake for Test",
+            "type": "shell",
+            "command": "mkdir -p build; cd build; cmake -G 'MinGW Makefiles' -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_BUILD_TYPE=Test ..",
+            "problemMatcher": [],
+            "detail": "Task to configure CMake for Test",
             "hide": true,
         },
         {
@@ -47,7 +55,7 @@
             "problemMatcher": [
                 "$gcc"
             ],
-            "detail": "Generated task for building",
+            "detail": "Generated task for debugging",
             "hide": true
         },
         {
@@ -64,7 +72,7 @@
             "problemMatcher": [
                 "$gcc"
             ],
-            "detail": "Generated task for building"
+            "detail": "Generated task for release",
         },
         {
             "label": "Build Tests",
@@ -75,12 +83,12 @@
                 "cwd": "${workspaceFolder}/build"
             },
             "dependsOn": [
-                "Configure CMake for Debug"
+                "Configure CMake for Test"
             ],
             "problemMatcher": [
                 "$gcc"
             ],
-            "detail": "Generated task for building",
+            "detail": "Generated task for tests",
             "hide": true
         },
         {

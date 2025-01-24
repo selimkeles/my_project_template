@@ -45,12 +45,12 @@
             "name": "Test",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/bin/runTests",
+            "program": "${workspaceFolder}/build/bin/TemplateProject_test",  // ChangeThis
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "externalConsole": false,
+            "externalConsole": true,
             "MIMode": "gdb",
             "setupCommands": [
                 {
