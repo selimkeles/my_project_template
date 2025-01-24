@@ -3,6 +3,8 @@
 ## Overview
 This project is a template for setting up a cross-platform CMake-based development environment in Visual Studio Code. It is designed to be used as a starting point for building C/C++ projects on both Windows and Unix-like systems (Linux/macOS). The template includes a modular project structure, support for external libraries, and unit testing.
 
+Use ```ChangeThis``` flag to change project specific stuff like Project Name, executables name since .vscode files do not forwards environment variables where every task performs on new shell. 
+
 ## Project Structure
 
 The project is organized into the following directories:

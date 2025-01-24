@@ -2,33 +2,98 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Configure CMake",
+            "label": "Configure CMake for Build",
             "type": "shell",
-            "command": "mkdir build; cd build; cmake -G 'MinGW Makefiles' -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ ..",
+            "command": "mkdir -p build; cd build; cmake -G 'MinGW Makefiles' -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ ..",
             "problemMatcher": [],
-            "detail": "Task to configure CMake"
+            "detail": "Task to configure CMake",
+            "hide": true
+        },
+        {
+            "label": "Configure CMake for Debug",
+            "type": "shell",
+            "command": "mkdir -p build; cd build; cmake -G 'MinGW Makefiles' -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_BUILD_TYPE=Debug ..",
+            "problemMatcher": [],
+            "detail": "Task to configure CMake",
+            "hide": true,
         },
         {
             "label": "Build",
             "type": "shell",
-            "command": "make",
+            "command": "cmake --build .",
             "group": "build",
             "options": {
                 "cwd": "${workspaceFolder}/build"
             },
-            "problemMatcher": ["$gcc"],
+            "dependsOn": [
+                "Configure CMake for Build"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ],
             "detail": "Generated task for building"
-        }
-        ,
+        },
+        {
+            "label": "Build Debug",
+            "type": "shell",
+            "command": "cmake --build . --config Debug",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+            "dependsOn": [
+                "Configure CMake for Debug"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Generated task for building",
+            "hide": true
+        },
+        {
+            "label": "Build Release",
+            "type": "shell",
+            "command": "cmake --build . --config Release",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+            "dependsOn": [
+                "Configure CMake for Release"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Generated task for building"
+        },
+        {
+            "label": "Build Tests",
+            "type": "shell",
+            "command": "cmake --build . --config Test",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+            "dependsOn": [
+                "Configure CMake for Debug"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Generated task for building",
+            "hide": true
+        },
         {
             "label": "Clean",
             "type": "shell",
-            "command": "make clean",
+            "command": "rm CMakeCache.txt; make clean",
             "group": "build",
             "options": {
                 "cwd": "${workspaceFolder}/build"
             },
-            "problemMatcher": ["$gcc"],
+            "problemMatcher": [
+                "$gcc"
+            ],
             "detail": "Generated task for cleaning"
         }
     ]

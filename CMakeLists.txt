@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(TemplateProject)
+project(TemplateProject)        # ChangeThis
 
 # Set compiler based on system
 set(CMAKE_C_COMPILER gcc)
@@ -8,10 +8,6 @@ set(CMAKE_GENERATOR "MinGW Makefiles")
 
 # Set output directories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/debug)
-# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/release)
-# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_BINARY_DIR}/relwithdebinfo)
-# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL ${CMAKE_BINARY_DIR}/minsizerel)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
@@ -26,15 +22,20 @@ file(GLOB_RECURSE INCLUDE_SOURCES "include/*.[ch]pp" "include/*.c")
 file(GLOB_RECURSE LIB_SOURCES "lib/*.[ch]pp" "lib/*.c")
 file(GLOB_RECURSE SRC_SOURCES "src/*.[ch]pp" "src/*.c")
 
+# Add custom compiler flags for each build type
+# -g for Debug, and optimize for Release
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+
 # Main executable
-add_executable(TemplateProject ${INCLUDE_SOURCES} ${LIB_SOURCES} ${SRC_SOURCES})
-target_sources(TemplateProject PRIVATE
+add_executable(${PROJECT_NAME} ${INCLUDE_SOURCES} ${LIB_SOURCES} ${SRC_SOURCES})
+target_sources(${PROJECT_NAME} PRIVATE
     $<$<NOT:$<CONFIG:Test>>:src/main.c>
 )
-# target_compile_definitions(TemplateProject PRIVATE
-#     $<$<CONFIG:Release>:RELEASE1>
-#     $<$<CONFIG:Debug>:DEBUG>
-# )
+target_compile_definitions(${PROJECT_NAME} PRIVATE
+    $<$<CONFIG:Release>:RELEASE>
+    $<$<CONFIG:Debug>:DEBUG>
+)
 
 # Enable testing
 enable_testing()

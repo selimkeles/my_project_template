@@ -1,17 +1,16 @@
 {
     "version": "0.2.0",
     "configurations": [
-
         {
-            "name": "Debug",
+            "name": "Run",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/bin/TemplateProject",
+            "program": "${workspaceFolder}/build/bin/TemplateProject",  // ChangeThis
             "args": [],
-            "stopAtEntry": true,
+            "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "externalConsole": true,
+            "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
                 {
@@ -23,10 +22,10 @@
             "preLaunchTask": "Build"
         },
         {
-            "name": "Test",
+            "name": "Debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/bin/runTests",
+            "program": "${workspaceFolder}/build/bin/TemplateProject",  // ChangeThis
             "args": [],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
@@ -40,7 +39,27 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Build"
+            "preLaunchTask": "Build Debug"
+        },
+        {
+            "name": "Test",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/bin/runTests",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build Tests"
         }
     ]
 }
