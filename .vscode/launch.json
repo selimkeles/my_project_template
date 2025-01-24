@@ -1,11 +1,12 @@
 {
     "version": "0.2.0",
     "configurations": [
+
         {
-            "name": "Debug (Linux/MacOS)",
+            "name": "Debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/${workspaceFolderBasename}",
+            "program": "${workspaceFolder}/build/debug/TemplateProject",
             "args": [],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
@@ -19,14 +20,13 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Build",
-            "miDebuggerPath": "/usr/bin/gdb" // Update this path if GDB is located elsewhere
+            "preLaunchTask": "Build Debug"
         },
         {
-            "name": "Debug (Windows)",
+            "name": "Release",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}\\build\\${workspaceFolderBasename}.exe",
+            "program": "${workspaceFolder}/build/release/TemplateProject",
             "args": [],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
@@ -40,14 +40,13 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Build",
-            "miDebuggerPath": "C:\\MinGW\\bin\\gdb.exe" // Update this path if GDB is located elsewhere
+            "preLaunchTask": "Build Release"
         },
         {
-            "name": "Debug Tests",
+            "name": "Test",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/tests",
+            "program": "${workspaceFolder}/build/test/runTests",
             "args": [],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
@@ -61,8 +60,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Test",
-            "miDebuggerPath": "/usr/bin/gdb" // Update this for your system
+            "preLaunchTask": "Build Tests"
         }
     ]
 }

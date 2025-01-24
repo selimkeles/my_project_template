@@ -2,7 +2,7 @@
   "files.exclude": {
     // "**/.vscode": true,
     "**/.git": true,
-    "**/.gitignore": true,
+    // "**/.gitignore": true,
     "**/.gitmodules": true,
     "**/.settings": true,
   },

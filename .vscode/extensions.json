@@ -1,0 +1,13 @@
+{
+    "recommendations": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
+        "twxs.cmake",
+        "aaron-bond.better-comments",
+        "waderyan.gitblame",
+        "ms-vscode.hexeditor",
+        "ms-vscode.vscode-serial-monitor",
+        "harryhopkinson.vim-theme",
+        "gruntfuggly.todo-tree"
+    ]
+}

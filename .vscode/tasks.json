@@ -2,68 +2,49 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build",
+            "label": "Build Debug",
             "type": "shell",
-            "command": "make",
-            "args": ["all"],
+            "command": "cmake",
+            "args": [
+                "--build",
+                "${workspaceFolder}/build",
+                "--config",
+                "Debug"
+            ],
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
-            "problemMatcher": {
-                "owner": "cpp",
-                "fileLocation": ["absolute"],
-                "pattern": {
-                    "regexp": "^(.*):([0-9]+):([0-9]+):\\s+(warning|error):\\s+(.*)$",
-                    "file": 1,
-                    "line": 2,
-                    "column": 3,
-                    "severity": 4,
-                    "message": 5
-                }
-            },
-            "detail": "Build the main project"
-        },
-        {
-            "label": "Test",
-            "type": "shell",
-            "command": "make",
-            "args": ["test"],
-            "group": "test",
-            "problemMatcher": {
-                "owner": "cpp",
-                "fileLocation": ["absolute"],
-                "pattern": {
-                    "regexp": "^(.*):([0-9]+):([0-9]+):\\s+(warning|error):\\s+(.*)$",
-                    "file": 1,
-                    "line": 2,
-                    "column": 3,
-                    "severity": 4,
-                    "message": 5
-                }
-            },
-            "detail": "Build and run tests"
-        },
-        {
-            "label": "Clean",
-            "type": "shell",
-            "command": "make",
-            "args": ["clean"],
-            "group": "build",
-            "problemMatcher": [],
-            "detail": "Clean the build directory"
-        },
-        {
-            "label": "Debug",
-            "type": "shell",
-            "command": "make",
-            "args": ["debug"],
-            "group": {
-                "kind": "build",
-                "isDefault": false
-            },
             "problemMatcher": ["$gcc"],
-            "detail": "Prepare for debugging"
+            "detail": "Generated task for building Debug configuration"
+        },
+        {
+            "label": "Build Release",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "${workspaceFolder}/build",
+                "--config",
+                "Release"
+            ],
+            "group": "build",
+            "problemMatcher": ["$gcc"],
+            "detail": "Generated task for building Release configuration"
+        },
+        {
+            "label": "Build Tests",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "${workspaceFolder}/build",
+                "--config",
+                "Test"
+            ],
+            "group": "build",
+            "problemMatcher": ["$gcc"],
+            "detail": "Generated task for building Test configuration"
         }
     ]
 }

@@ -3,10 +3,12 @@
     "env": {
         "Project_Include": [
             "${workspaceFolder}/**"
+            ,"C:/MinGW/include/**"
             // ,"/Path/to/your/include/folder"
         ],
         "Project_Browse": [
             "${workspaceFolder}/"
+            ,"C:/MinGW/include/**"
             // ,"/Path/to/your/browse/folder"
         ],
         "Project_Forced_Include":[
@@ -18,7 +20,6 @@
             "name": "Win32",
             "browse": {
                 "path": [
-                    "${workspaceFolder}/**",
                     "${Project_Browse}"
                 ]
             },
@@ -26,7 +27,6 @@
                 "${Project_Forced_Include}"
             ],
             "includePath": [
-                "${workspaceFolder}/**",
                 "${Project_Include}"
             ],
             "defines": [
