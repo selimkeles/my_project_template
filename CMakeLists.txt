@@ -18,12 +18,16 @@ include_directories(lib)
 include_directories(src)
 
 # Source files
-file(GLOB_RECURSE INCLUDE_SOURCES "include/*.[ch]pp" "include/*.c")
-file(GLOB_RECURSE LIB_SOURCES "lib/*.[ch]pp" "lib/*.c")
+file(GLOB_RECURSE INCLUDE_SOURCES "include/*.[ch]pp" "include/*.c" "include/*.h")
+file(GLOB_RECURSE LIB_SOURCES "lib/*.[ch]pp" "lib/*.c" "lib/*.h")
+file(GLOB_RECURSE SRC_SOURCES "src/*.[ch]pp" "src/*.c"  "src/*.h")
 
 # Main executable source files
-set(MAIN_SOURCES ${INCLUDE_SOURCES} ${LIB_SOURCES} src/main.c)
-set(TEST_SOURCES ${INCLUDE_SOURCES} ${LIB_SOURCES} tests/test.c)
+set(MAIN_SOURCES ${INCLUDE_SOURCES} ${LIB_SOURCES} ${SRC_SOURCES})
+set(TEST_SOURCES ${INCLUDE_SOURCES} ${LIB_SOURCES} ${SRC_SOURCES} ${CMAKE_SOURCE_DIR}/tests/test.c)
+
+# Exclude src/main.c from TEST_SOURCES
+list(REMOVE_ITEM TEST_SOURCES ${CMAKE_SOURCE_DIR}/src/main.c)
 
 # Add custom compiler flags for each build type
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
