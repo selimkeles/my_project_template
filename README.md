@@ -13,9 +13,7 @@ my_project
 ├── LICENSE
 ├── README.md
 ├── build
-│   ├── Release
-│   ├── Debug
-│   └── Tests
+│   └── bin
 ├── include
 │   ├── .
 │   ├── .

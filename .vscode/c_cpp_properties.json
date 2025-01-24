@@ -3,17 +3,11 @@
     "env": {
         "Project_Include": [
             "${workspaceFolder}/**"
-            ,"C:/MinGW/include/**"
-            // ,"/Path/to/your/include/folder"
         ],
         "Project_Browse": [
             "${workspaceFolder}/"
-            ,"C:/MinGW/include/**"
-            // ,"/Path/to/your/browse/folder"
         ],
-        "Project_Forced_Include":[
-            // "/Path/to/your/forced/include/file"
-        ]
+        "Project_Forced_Include": []
     },
     "configurations": [
         {
@@ -33,7 +27,8 @@
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE"
-            ]
+            ],
+            "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],
     "version": 4

@@ -2,7 +2,7 @@
   "files.exclude": {
     // "**/.vscode": true,
     "**/.git": true,
-    // "**/.gitignore": true,
+    "**/.gitignore": true,
     "**/.gitmodules": true,
     "**/.settings": true,
   },
@@ -29,4 +29,8 @@
   "C_Cpp.intelliSenseCacheSize": 8192,
   "C_Cpp.intelliSenseMemoryLimit": 8192,
   "C_Cpp.default.intelliSenseMode": "windows-gcc-x64",
+  "C_Cpp.default.compilerPath": "gcc",
+  "C_Cpp.default.systemIncludePath": [
+    "C:/MinGW/include/**"
+  ]
 }

@@ -2,49 +2,34 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build Debug",
+            "label": "Configure CMake",
             "type": "shell",
-            "command": "cmake",
-            "args": [
-                "--build",
-                "${workspaceFolder}/build",
-                "--config",
-                "Debug"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
+            "command": "mkdir build; cd build; cmake -G 'MinGW Makefiles' -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ ..",
+            "problemMatcher": [],
+            "detail": "Task to configure CMake"
+        },
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "make",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}/build"
             },
             "problemMatcher": ["$gcc"],
-            "detail": "Generated task for building Debug configuration"
-        },
+            "detail": "Generated task for building"
+        }
+        ,
         {
-            "label": "Build Release",
+            "label": "Clean",
             "type": "shell",
-            "command": "cmake",
-            "args": [
-                "--build",
-                "${workspaceFolder}/build",
-                "--config",
-                "Release"
-            ],
+            "command": "make clean",
             "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
             "problemMatcher": ["$gcc"],
-            "detail": "Generated task for building Release configuration"
-        },
-        {
-            "label": "Build Tests",
-            "type": "shell",
-            "command": "cmake",
-            "args": [
-                "--build",
-                "${workspaceFolder}/build",
-                "--config",
-                "Test"
-            ],
-            "group": "build",
-            "problemMatcher": ["$gcc"],
-            "detail": "Generated task for building Test configuration"
+            "detail": "Generated task for cleaning"
         }
     ]
 }

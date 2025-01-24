@@ -58,9 +58,6 @@ bin/
 build/
 Debug/
 Release/
-.vs/
-.vscode/
-.idea/
 
 # OS generated files
 .DS_Store
