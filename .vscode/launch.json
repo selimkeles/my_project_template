@@ -10,7 +10,7 @@
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "externalConsole": true,        // TODO: Change to false but it does not work
+            "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
                 {
@@ -30,7 +30,7 @@
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "externalConsole": true,    // TODO: Change to false but it does not work
+            "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
                 {
@@ -50,7 +50,7 @@
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "externalConsole": true,    // TODO: Change to false but it does not work
+            "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
                 {

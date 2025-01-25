@@ -4,7 +4,9 @@ project(TemplateProject)        # ChangeThis
 # Set compiler based on system
 set(CMAKE_C_COMPILER gcc)
 set(CMAKE_CXX_COMPILER g++)
-set(CMAKE_GENERATOR "MinGW Makefiles")
+if(WIN32)
+    set(CMAKE_GENERATOR "MinGW Makefiles")
+endif()
 
 # Set output directories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
