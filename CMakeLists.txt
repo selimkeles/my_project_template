@@ -15,6 +15,7 @@ set(CMAKE_CXX_STANDARD 17)
 # Include directories
 include_directories(include)
 include_directories(lib)
+include_directories(lib/TaskScheduler/include)
 include_directories(src)
 
 # Source files
@@ -30,6 +31,7 @@ set(TEST_SOURCES ${INCLUDE_SOURCES} ${LIB_SOURCES} ${SRC_SOURCES} ${CMAKE_SOURCE
 list(REMOVE_ITEM TEST_SOURCES ${CMAKE_SOURCE_DIR}/src/main.c)
 
 # Add custom compiler flags for each build type
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
