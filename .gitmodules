@@ -1,0 +1,9 @@
+[submodule "lib/TaskScheduler"]
+	path = lib/TaskScheduler
+	url = https://github.com/selimkeles/TaskScheduler.git
+[submodule "lib/json/jWrite"]
+	path = lib/json/jWrite
+	url = git@github.com:jonaskgandersson/jWrite.git
+[submodule "lib/json/jsmn"]
+	path = lib/json/jsmn
+	url = git@github.com:zserge/jsmn.git
