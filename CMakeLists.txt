@@ -19,6 +19,13 @@ include_directories(include)
 include_directories(lib)
 include_directories(lib/TaskScheduler/include)
 include_directories(src)
+if(WIN32)
+include_directories(
+    "C:/MinGW/include"
+    "C:/MinGW/lib/gcc/mingw32/6.3.0/include"
+)
+endif()
+
 
 # Source files
 file(GLOB_RECURSE INCLUDE_SOURCES "include/*.[ch]pp" "include/*.c" "include/*.h")

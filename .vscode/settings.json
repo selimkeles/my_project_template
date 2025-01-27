@@ -6,9 +6,7 @@
     "**/.gitmodules": true,
     "**/.settings": true,
   },
-  "files.associations": {
-    "**/*.h": "c",
-  },
+  "C_Cpp.autoAddFileAssociations": false,
   "C_Cpp.default.cStandard": "c23",
   "C_Cpp.autocompleteAddParentheses": true,
   "C_Cpp.autocomplete": "default",

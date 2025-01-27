@@ -28,7 +28,7 @@
                 "UNICODE",
                 "_UNICODE"
             ],
-            "configurationProvider": "ms-vscode.cmake-tools"
+            "configurationProvider": "ms-vscode.cmake-tools"        // This line directs everything to CMakeLists.txt so above is rubbish
         }
     ],
     "version": 4
