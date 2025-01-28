@@ -21,15 +21,6 @@ my_project
 │   ├── .
 │   └── .
 ├── lib
-│   ├── JSON
-│   │   ├── jsmn
-│   │   │   └── ...
-│   │   └── JWrite
-│   │       └── ...
-│   ├── table
-│   │   ├── LICENSE
-│   │   ├── README
-│   │   └── ...
 │   ├── TaskScheduler
 │   │   ├── LICENSE
 │   │   ├── README

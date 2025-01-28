@@ -62,26 +62,6 @@
                 }
             ],
             "preLaunchTask": "Build Debug"
-        },
-        {
-            "name": "Test",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "ctest",
-            "args": ["--output-on-failure"],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/build",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "setupCommands": [
-            {
-                "description": "Enable pretty-printing for gdb",
-                "text": "-enable-pretty-printing",
-                "ignoreFailures": true
-            }
-            ],
-            "preLaunchTask": "Build Tests"
         }
     ]
 }

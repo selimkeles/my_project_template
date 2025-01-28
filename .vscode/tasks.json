@@ -5,7 +5,6 @@
             "label": "Configure CMake for Build",
             "type": "shell",
             "command": "mkdir -p build; cd build; cmake ..",
-            "problemMatcher": [],
             "detail": "Task to configure CMake for Build",
             "hide": true
         },
@@ -13,7 +12,6 @@
             "label": "Configure CMake for Debug",
             "type": "shell",
             "command": "mkdir -p build; cd build; cmake -DCMAKE_BUILD_TYPE=Debug ..",
-            "problemMatcher": [],
             "detail": "Task to configure CMake for Debug",
             "hide": true
         },
@@ -21,7 +19,6 @@
             "label": "Configure CMake for Test",
             "type": "shell",
             "command": "mkdir -p build; cd build; cmake -DCMAKE_BUILD_TYPE=Test ..",
-            "problemMatcher": [],
             "detail": "Task to configure CMake for Test",
             "hide": true
         },
@@ -81,21 +78,31 @@
             "label": "Build Tests",
             "type": "shell",
             "command": "cmake --build .",
-            "group": {
-                "kind": "test",
-                "isDefault": true
-            },
+            "group": "test",
             "options": {
                 "cwd": "${workspaceFolder}/build"
             },
             "dependsOn": [
                 "Configure CMake for Test"
             ],
-            "problemMatcher": [
-                "$gcc"
-            ],
             "detail": "Generated task for tests",
             "hide": true
+        },
+        {
+            "label": "Run Tests",
+            "type": "shell",
+            "command": "ctest .",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "dependsOn": [
+                "Build Tests"
+            ],
+            "detail": "Build task for tests"
         },
         {
             "label": "Clean",
@@ -110,9 +117,6 @@
             "options": {
                 "cwd": "${workspaceFolder}"
             },
-            "problemMatcher": [
-                "$gcc"
-            ],
             "detail": "Generated task for cleaning"
         }
     ]
