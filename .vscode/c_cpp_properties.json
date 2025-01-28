@@ -24,11 +24,14 @@
                 "${Project_Include}"
             ],
             "defines": [
-                "_DEBUG",
-                "UNICODE",
-                "_UNICODE"
             ],
-            "configurationProvider": "ms-vscode.cmake-tools"        // This line directs everything to CMakeLists.txt so above is rubbish
+            "intelliSenseMode": "msvc-x64",
+            "compilerArgs": [
+                "-Wno-unknown-pragmas",
+                "-Wno-attributes"
+            ],
+            
+            "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],
     "version": 4

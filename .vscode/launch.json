@@ -2,7 +2,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Run",
+            "name": "Run (Windows)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/bin/Debug/TemplateProject.exe",    // ChangeThis
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "preLaunchTask": "Build"
+        },
+        {
+            "name": "Run (Unix)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/bin/TemplateProject",  // ChangeThis
@@ -19,10 +30,21 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Build"
+            "preLaunchTask": "Build",
         },
         {
-            "name": "Debug",
+            "name": "Debug (Windows)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/bin/Debug/TemplateProject.exe",    // ChangeThis
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "preLaunchTask": "Build Debug"
+        },
+        {
+            "name": "Debug (Unix)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/bin/TemplateProject",  // ChangeThis
@@ -45,19 +67,19 @@
             "name": "Test",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/bin/TemplateProject_test",  // ChangeThis
-            "args": [],
+            "program": "ctest",
+            "args": ["--output-on-failure"],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/build",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
+            {
+                "description": "Enable pretty-printing for gdb",
+                "text": "-enable-pretty-printing",
+                "ignoreFailures": true
+            }
             ],
             "preLaunchTask": "Build Tests"
         }

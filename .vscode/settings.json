@@ -7,28 +7,12 @@
     "**/.settings": true,
   },
   "C_Cpp.autoAddFileAssociations": false,
-  "C_Cpp.default.cStandard": "c23",
   "C_Cpp.autocompleteAddParentheses": true,
   "C_Cpp.autocomplete": "default",
   "C_Cpp.codeFolding": "enabled",
   "C_Cpp.default.browse.limitSymbolsToIncludedHeaders": true,
   "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: Microsoft, BreakBeforeBraces: Allman, IndentWidth: 4, AllowShortIfStatementsOnASingleLine: true, ColumnLimit: 100, UseTab: Never, TabWidth: 4, IndentCaseLabels: false, AccessModifierOffset: -4}",
-  "C_Cpp.default.compilerArgs": [
-    "-Wno-unknown-pragmas",
-    "-Wno-attributes"
-  ],
-  "C_Cpp.default.browse.path": [
-    "${workspaceFolder}/",
-  ],
-  "C_Cpp.default.includePath": [
-    "${workspaceFolder}/**",
-  ],
   "C_Cpp.intelliSenseEngine": "default",
   "C_Cpp.intelliSenseCacheSize": 8192,
   "C_Cpp.intelliSenseMemoryLimit": 8192,
-  "C_Cpp.default.intelliSenseMode": "windows-gcc-x64",
-  // "C_Cpp.default.compilerPath": "gcc",
-  "C_Cpp.default.systemIncludePath": [
-    "C:/MinGW/include/**"
-  ]
 }

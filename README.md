@@ -54,9 +54,9 @@ my_project
 
 ## Build Process
 
-### Windows (MinGW)
+### Windows (MSVC)
 
-On Windows, we use the **MinGW** toolchain for compiling the C source code. CMake will detect the platform and adjust the compilation flags accordingly. The project is built using `gcc` (MinGW) on Windows.
+On Windows, we use the **Windows Build Tools** toolchain for compiling the C source code. CMake will detect the platform and adjust the compilation flags accordingly. The project is built using `mcvs` on Windows.
 
 ### Unix-like Systems (Linux/macOS)
 
@@ -66,7 +66,7 @@ On Linux and macOS, the project can also be built using the same CMake approach.
 
 ### 1. Install Required Tools
 
-- **Windows**: Install **MinGW** or **MSYS2** to get the GCC compiler.
+- **Windows**: Install `Windows Build Tools` and `Ninja-Build`
 - **Linux/macOS**: Ensure that you have `gcc`, `g++`, and `cmake` installed. You can install them using your package manager (e.g., `apt`, `brew`).
 
 ### 2. Building the Project
@@ -79,6 +79,13 @@ cd build
 cmake ..
 make
 ```
+or
+```
+shortcut control+shift+p
+type run task
+select task:Build
+```
+Alternatively you can set default build and test task
 
 This will compile the source code and generate an executable in the `build/` directory.
 
