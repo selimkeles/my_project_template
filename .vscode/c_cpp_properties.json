@@ -23,14 +23,33 @@
             "includePath": [
                 "${Project_Include}"
             ],
-            "defines": [
-            ],
+            "defines": [],
             "intelliSenseMode": "msvc-x64",
+            "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.42.34433/bin/Hostx64/x64/cl.exe",
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "cStandard": "c17",
+            "cppStandard": "c++17"
+        },
+        {
+            "name": "Linux",
+            "browse": {
+                "path": [
+                    "${Project_Browse}"
+                ]
+            },
+            "forcedInclude": [
+                "${Project_Forced_Include}"
+            ],
+            "includePath": [
+                "${Project_Include}"
+            ],
+            "defines": [],
+            "intelliSenseMode": "gcc-x64",
             "compilerArgs": [
                 "-Wno-unknown-pragmas",
                 "-Wno-attributes"
             ],
-            
+            "compilerPath": "/usr/bin/gcc",
             "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],
