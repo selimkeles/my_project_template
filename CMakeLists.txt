@@ -1,50 +1,76 @@
 cmake_minimum_required(VERSION 3.10)
-project(TemplateProject)        # ChangeThis
+project(TemplateProject VERSION 1.0.0)
+enable_testing()
 
-# Set default build type to Debug if not specified
+# Set output directories for all builds
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
+# Set default build type
 if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type (Debug, Release, etc.)" FORCE)
+    set(CMAKE_BUILD_TYPE Debug)
 endif()
 
-# Set compiler based on system
-if(WIN32)
+# Project options
+option(BUILD_TESTS "Build test programs" ON)
+option(BUILD_DOCS "Build documentation" OFF)
+option(BUILD_EXAMPLES "Build examples" OFF)
+
+# Set C/C++ compiler flags
+if(MSVC)
+    # MSVC compiler flags
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /DEBUG /Od")
+    
+    # Debug flags
+    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /Zi /Od")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Zi /Od")
+    
+    # Release flags
+    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} /O2")
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /O2")
-elseif(UNIX)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic")
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
+else()
+    # GCC/Clang compiler flags
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -pedantic")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic")
+    
+    # Debug flags
+    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -O0")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0")
+    
+    # Release flags
+    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O3")
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 endif()
-    
-# Set C C++ standard
-set(CMAKE_C_STANDARD 11)
-set(CMAKE_CXX_STANDARD 17)
 
 # Set output directories
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin/Debug)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin/Release)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/lib/Debug)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/lib/Release) 
 
-# Include directories
-include_directories(include)
-include_directories(lib)
-include_directories(lib/TaskScheduler/include)
+# Create library from source files
+file(GLOB_RECURSE LIB_SOURCES 
+    "src/*.c"
+    "src/*.cpp"
+)
 
-# Source files
-file(GLOB_RECURSE INCLUDE_SOURCES  "include/*.c" "include/*.cpp")
-file(GLOB_RECURSE LIB_SOURCES "lib/*.c" "lib/*.cpp")
-file(GLOB_RECURSE SRC_SOURCES "src/*.c" "src/*.cpp")
+add_library(${PROJECT_NAME}_lib STATIC ${LIB_SOURCES})
+target_include_directories(${PROJECT_NAME}_lib PUBLIC include)
 
-# Main and test executable source files
-set(MAIN_SOURCES ${INCLUDE_SOURCES} ${LIB_SOURCES} ${SRC_SOURCES})
-set(TEST_SOURCES ${INCLUDE_SOURCES} ${LIB_SOURCES} ${SRC_SOURCES} ${CMAKE_SOURCE_DIR}/tests/test.c)
-list(REMOVE_ITEM TEST_SOURCES ${CMAKE_SOURCE_DIR}/src/main.c)   # Exclude src/main.c from TEST_SOURCES
+# Create main executable
+add_executable(${PROJECT_NAME} src/main.c)
+target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_lib)
 
-add_executable(${PROJECT_NAME} ${MAIN_SOURCES})
-# Test executable
-add_executable(${PROJECT_NAME}_test ${TEST_SOURCES})
-target_compile_definitions(${PROJECT_NAME}_test PRIVATE TEST)
-target_include_directories(${PROJECT_NAME}_test PRIVATE ${CMAKE_SOURCE_DIR}/tests/unity)
+# Add subdirectories
+add_subdirectory(lib/TaskScheduler)
 
-# Enable testing
-enable_testing()
-add_test(NAME runTests COMMAND ${PROJECT_NAME}_test)
+if(BUILD_TESTS)
+    list(REMOVE_ITEM LIB_SOURCES ${CMAKE_SOURCE_DIR}/src/main.c)
+    add_subdirectory(tests)
+endif()
+
+if(BUILD_EXAMPLES)
+    add_subdirectory(examples)
+endif()

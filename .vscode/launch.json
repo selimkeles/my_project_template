@@ -16,7 +16,7 @@
             "name": "Run (Unix)",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/bin/TemplateProject",  // ChangeThis
+            "program": "${workspaceFolder}/build/bin/Debug/TemplateProject",  // ChangeThis
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -41,13 +41,13 @@
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "preLaunchTask": "Build Debug"
+            "preLaunchTask": "Build"
         },
         {
             "name": "Debug (Unix)",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/bin/TemplateProject",  // ChangeThis
+            "program": "${workspaceFolder}/build/bin/Debug/TemplateProject",  // ChangeThis
             "args": [],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
@@ -61,7 +61,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Build Debug"
+            "preLaunchTask": "Build"
         }
     ]
 }

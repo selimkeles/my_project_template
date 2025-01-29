@@ -2,50 +2,27 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Configure CMake for Build",
-            "type": "shell",
-            "command": "mkdir -p build; cd build; cmake ..",
-            "detail": "Task to configure CMake for Build",
-            "hide": true
-        },
-        {
             "label": "Configure CMake for Debug",
             "type": "shell",
-            "command": "mkdir -p build; cd build; cmake -DCMAKE_BUILD_TYPE=Debug ..",
+            "command": "mkdir -p build; cd build; cmake ..",
             "detail": "Task to configure CMake for Debug",
             "hide": true
         },
         {
-            "label": "Configure CMake for Test",
+            "label": "Configure CMake for Release",
             "type": "shell",
-            "command": "mkdir -p build; cd build; cmake -DCMAKE_BUILD_TYPE=Test ..",
-            "detail": "Task to configure CMake for Test",
+            "command": "mkdir -p build; cd build; cmake -DCMAKE_BUILD_TYPE=Release ..",
+            "detail": "Task to configure CMake for Release",
             "hide": true
         },
         {
             "label": "Build",
             "type": "shell",
-            "command": "cmake --build .",
+            "command": "cmake --build . --config Debug",
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
-            "options": {
-                "cwd": "${workspaceFolder}/build"
-            },
-            "dependsOn": [
-                "Configure CMake for Build"
-            ],
-            "problemMatcher": [
-                "$gcc"
-            ],
-            "detail": "Generated task for building"
-        },
-        {
-            "label": "Build Debug",
-            "type": "shell",
-            "command": "cmake --build . --config Debug",
-            "group": "build",
             "options": {
                 "cwd": "${workspaceFolder}/build"
             },
@@ -56,13 +33,15 @@
                 "$gcc"
             ],
             "detail": "Generated task for debugging",
-            "hide": true
         },
         {
             "label": "Build Release",
             "type": "shell",
             "command": "cmake --build . --config Release",
-            "group": "build",
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
             "options": {
                 "cwd": "${workspaceFolder}/build"
             },
@@ -75,37 +54,26 @@
             "detail": "Generated task for release"
         },
         {
-            "label": "Build Tests",
+            "label": "Run Tests",
             "type": "shell",
-            "command": "cmake --build .",
-            "group": "test",
+            "command": "ctest -C Release .",
+            "group": {
+                "kind": "test",
+                "isDefault": false
+            },
             "options": {
                 "cwd": "${workspaceFolder}/build"
             },
+
             "dependsOn": [
-                "Configure CMake for Test"
+                "Build Release"
             ],
-            "detail": "Generated task for tests",
-            "hide": true
-        },
-        {
-            "label": "Run Tests",
-            "type": "shell",
-            "command": "ctest .",
-            "group": {
-                "kind": "test",
-                "isDefault": true
-            },
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "dependsOn": [
-                "Build Tests"
-            ],
-            "detail": "Build task for tests"
+            "detail": "Run Tests"
         },
         {
             "label": "Clean",
+
+
             "type": "shell",
             "linux": {
                 "command": "rm -rf build"

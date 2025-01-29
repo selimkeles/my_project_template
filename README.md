@@ -10,32 +10,21 @@ Use ```ChangeThis``` flag to change project specific stuff like Project Name, ex
 The project is organized into the following directories:
 
 ```bash
-my_project
-├── CMakeLists.txt
-├── LICENSE
-├── README.md
-├── build
-│   └── bin
-├── include
-│   ├── .
-│   ├── .
-│   └── .
-├── lib
-│   ├── TaskScheduler
-│   │   ├── LICENSE
-│   │   ├── README
-│   │   └── ...
-│   .
-│   .
-│   .
-├── src
-│   ├── main.c
-│   └── some_sub_folder2
-│       ├── another_sub_folder2
-│       │   └── subfile2.c
-│       └── subfile1.c
-└── tests
-    └── test.c
+.
+├── .vscode/
+│   ├── launch.json
+│   ├── settings.json
+│   └── tasks.json
+├── build/                     # Build output directory
+├── include/                   # Header files
+├── lib/                      # External libraries
+├── src/                      # Source files
+├── tests/                    # Test files
+├── CMakeLists.txt           # Main CMake configuration
+├── CONTRIBUTING.md          # Contribution guidelines
+├── LICENSE                  # MIT License
+└── README.md               # Project documentation
+
 ```
 
 - **include/**: Contains the header files (.h) for defining function prototypes, structures, and constants.
@@ -57,7 +46,7 @@ On Linux and macOS, the project can also be built using the same CMake approach.
 
 ### 1. Install Required Tools
 
-- **Windows**: Install `Windows Build Tools` and `Ninja-Build`
+- **Windows**: Install `Windows Build Tools`
 - **Linux/macOS**: Ensure that you have `gcc`, `g++`, and `cmake` installed. You can install them using your package manager (e.g., `apt`, `brew`).
 
 ### 2. Building the Project
@@ -76,6 +65,13 @@ shortcut control+shift+p
 type run task
 select task:Build
 ```
+
+or
+
+```
+shortcut control+shift+b
+```
+
 Alternatively you can set default build and test task
 
 This will compile the source code and generate an executable in the `build/` directory.
@@ -88,7 +84,7 @@ mkdir build
 cd build
 
 # Configure for Debug build
-cmake -DCMAKE_BUILD_TYPE=Debug ..
+cmake ..
 
 # Build Debug
 cmake --build .
@@ -105,7 +101,16 @@ cmake --build .
 You can run the unit tests with the following command:
 
 ```bash
+cd build
 ctest
+```
+
+or 
+
+```
+shortcut control+shift+p
+type run task
+select task:Run Tests
 ```
 
 This will compile and run the test files located in the `tests/` directory.
@@ -118,11 +123,20 @@ To clean up the generated files and start from scratch, you can use the clean ta
 make clean
 ```
 
+or
+
+```
+shortcut control+shift+p
+type run task
+select task:Clean
+```
+
 This will remove the `build/` directory and all compiled files.
 
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
 
 ## Contributing
 

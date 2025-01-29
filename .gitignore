@@ -58,6 +58,7 @@ bin/
 build/
 Debug/
 Release/
+Testing/
 
 # OS generated files
 .DS_Store
