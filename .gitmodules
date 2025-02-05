@@ -1,8 +1,6 @@
 [submodule "lib/TaskScheduler"]
 	path = lib/TaskScheduler
 	url = https://github.com/selimkeles/TaskScheduler.git
-	branch = master
 [submodule "tests/Unity"]
 	path = tests/Unity
 	url = https://github.com/ThrowTheSwitch/Unity.git
-	branch = master
