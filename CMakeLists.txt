@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(TemplateProject VERSION 1.0.0)
+project(TemplateProject VERSION 1.0.0)  # ChangeThis
 enable_testing()
 
 # Set output directories for all builds
