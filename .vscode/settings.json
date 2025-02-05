@@ -15,4 +15,5 @@
   "C_Cpp.intelliSenseEngine": "default",
   "C_Cpp.intelliSenseCacheSize": 8192,
   "C_Cpp.intelliSenseMemoryLimit": 8192,
+  "cmake.automaticReconfigure": false
 }
