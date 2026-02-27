@@ -24,7 +24,24 @@ function(add_unit_test test_name)
     target_include_directories(${test_name} PRIVATE
         ${CMAKE_SOURCE_DIR}/src
     )
-    add_test(NAME ${test_name} COMMAND ${test_name})
+    
+    # Set C++11 for test executables
+    set_target_properties(${test_name} PROPERTIES
+        CXX_STANDARD 11
+        CXX_STANDARD_REQUIRED ON
+    )
+    
+    add_test(
+        NAME ${test_name}
+        COMMAND ${test_name}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    )
+    
+    # Set test properties
+    set_tests_properties(${test_name} PROPERTIES
+        TIMEOUT 30  # Timeout in seconds
+        WILL_FAIL FALSE
+    )
 endfunction()
 
 add_unit_test(test_main
