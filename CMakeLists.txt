@@ -14,17 +14,12 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin/Release)
 
 option(BUILD_TESTS "Build test programs" ON)
 
-# All sources under src/ except the entry point
 file(GLOB_RECURSE SRC_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
 )
-list(REMOVE_ITEM SRC_FILES
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/main.c"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp"
-)
 
-add_executable(${PROJECT_NAME} src/main.cpp ${SRC_FILES})
+add_executable(${PROJECT_NAME} ${SRC_FILES})
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 if(MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /W4)

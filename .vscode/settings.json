@@ -68,6 +68,30 @@
         "launchTarget": {
             "statusBarVisibility": "inherit",
             "inheritDefault": "visible"
+        },
+        "buildPreset": {
+            "statusBarVisibility": "inherit",
+            "inheritDefault": "visible"
+        },
+        "configure": {
+            "statusBarVisibility": "inherit",
+            "inheritDefault": "visible"
+        },
+        "ctest": {
+            "statusBarVisibility": "inherit",
+            "inheritDefault": "visible"
+        },
+        "kit": {
+            "statusBarVisibility": "inherit",
+            "inheritDefault": "visible"
+        },
+        "variant": {
+            "statusBarVisibility": "inherit",
+            "inheritDefault": "visible"
+        },
+        "folder": {
+            "statusBarVisibility": "inherit",
+            "inheritDefault": "visible"
         }
     },
     // -------------------------------------------------------------------------
