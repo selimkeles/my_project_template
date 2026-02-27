@@ -1,13 +1,10 @@
 {
     "recommendations": [
-        "ms-vscode.cpptools",
+        // CMake project configuration, build, and test integration
         "ms-vscode.cmake-tools",
-        "twxs.cmake",
-        "aaron-bond.better-comments",
-        "waderyan.gitblame",
-        "ms-vscode.hexeditor",
-        "ms-vscode.vscode-serial-monitor",
-        "harryhopkinson.vim-theme",
-        "gruntfuggly.todo-tree",
+        // clangd: IntelliSense, code completion, diagnostics, formatting
+        "llvm-vs-code-extensions.vscode-clangd",
+        // cpptools: required for cppvsdbg (MSVC) and cppdbg (GDB) debuggers
+        "ms-vscode.cpptools"
     ]
 }

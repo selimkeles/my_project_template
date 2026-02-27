@@ -1,3 +1,0 @@
-[submodule "lib/TaskScheduler"]
-	path = lib/TaskScheduler
-	url = https://github.com/selimkeles/TaskScheduler.git

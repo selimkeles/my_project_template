@@ -1,76 +1,38 @@
-cmake_minimum_required(VERSION 3.10)
-project(TemplateProject VERSION 1.0.0)
-enable_testing()
+cmake_minimum_required(VERSION 3.20)
+project(TemplateProject VERSION 1.0.0 LANGUAGES C CXX)
 
-# Set output directories for all builds
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Set default build type
-if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Debug)
-endif()
+set(CMAKE_C_STANDARD 17)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Project options
-option(BUILD_TESTS "Build test programs" ON)
-option(BUILD_DOCS "Build documentation" OFF)
-option(BUILD_EXAMPLES "Build examples" OFF)
-
-# Set C/C++ compiler flags
-if(MSVC)
-    # MSVC compiler flags
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
-    
-    # Debug flags
-    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /Zi /Od")
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Zi /Od")
-    
-    # Release flags
-    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} /O2")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /O2")
-else()
-    # GCC/Clang compiler flags
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -pedantic")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic")
-    
-    # Debug flags
-    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -O0")
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0")
-    
-    # Release flags
-    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O3")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
-endif()
-
-# Set output directories
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin/Debug)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY         ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG   ${CMAKE_BINARY_DIR}/bin/Debug)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin/Release)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/lib/Debug)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/lib/Release) 
 
-# Create library from source files
-file(GLOB_RECURSE LIB_SOURCES 
-    "src/*.c"
-    "src/*.cpp"
+option(BUILD_TESTS "Build test programs" ON)
+
+# All sources under src/ except the entry point
+file(GLOB_RECURSE SRC_FILES
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
+)
+list(REMOVE_ITEM SRC_FILES
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/main.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp"
 )
 
-add_library(${PROJECT_NAME}_lib STATIC ${LIB_SOURCES})
-target_include_directories(${PROJECT_NAME}_lib PUBLIC include)
-
-# Create main executable
-add_executable(${PROJECT_NAME} src/main.c)
-target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_lib)
-
-# Add subdirectories
-add_subdirectory(lib/TaskScheduler)
-
-if(BUILD_TESTS)
-    list(REMOVE_ITEM LIB_SOURCES ${CMAKE_SOURCE_DIR}/src/main.c)
-    add_subdirectory(tests)
+add_executable(${PROJECT_NAME} src/main.cpp ${SRC_FILES})
+target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
+if(MSVC)
+    target_compile_options(${PROJECT_NAME} PRIVATE /W4)
+else()
+    target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -pedantic)
 endif()
 
-if(BUILD_EXAMPLES)
-    add_subdirectory(examples)
+if(BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
 endif()
