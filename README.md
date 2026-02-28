@@ -1,143 +1,143 @@
-# My Project
+# C/C++ Project Template
 
-## Overview
-This project is a template for setting up a cross-platform CMake-based development environment in Visual Studio Code. It is designed to be used as a starting point for building C/C++ projects on both Windows and Unix-like systems (Linux/macOS). The template includes a modular project structure, support for external libraries, and unit testing.
+A CMake preset-based C/C++ project template for VSCode with clangd IntelliSense, Unity unit testing, and Ninja builds.
 
-Use ```ChangeThis``` flag to change project specific stuff like Project Name, executables name since .vscode files do not forwards environment variables where every task performs on new shell. 
+---
+
+## Requirements
+
+### Windows
+| Tool | Purpose | PATH required |
+|---|---|---|
+| [LLVM](https://releases.llvm.org/) | clang, clang++, llvm-rc, clangd | Yes — add `LLVM/bin` |
+| [Ninja](https://ninja-build.org/) | Build system | Yes |
+| [CMake](https://cmake.org/) 3.20+ | Build configuration | Yes |
+
+### Linux
+| Tool | Purpose |
+|---|---|
+| `gcc`, `g++` | Compiler |
+| `ninja-build` | Build system |
+| `cmake` 3.20+ | Build configuration |
+
+```bash
+# Ubuntu/Debian
+sudo apt install gcc g++ ninja-build cmake
+```
+
+---
 
 ## Project Structure
 
-The project is organized into the following directories:
-
-```bash
+```
 .
+├── src/                        # Source files — headers live next to sources
+│   └── MyModule/
+│       ├── myModule.h
+│       └── myModule.cpp
+├── tests/
+│   ├── unity/                  # Unity test framework (submodule)
+│   ├── unit/                   # Unit test files
+│   │   └── test_myModule.cpp
+│   ├── CMakeLists.txt
+│   └── test.c                  # Test runner entry point
 ├── .vscode/
-│   ├── launch.json
-│   ├── settings.json
-│   └── tasks.json
-├── build/                     # Build output directory
-├── include/                   # Header files
-├── lib/                      # External libraries
-├── src/                      # Source files
-├── tests/                    # Test files
-├── CMakeLists.txt           # Main CMake configuration
-├── CONTRIBUTING.md          # Contribution guidelines
-├── LICENSE                  # MIT License
-└── README.md               # Project documentation
-
+│   ├── settings.json           # clangd + cmake-tools config
+│   ├── launch.json             # Debug config (cppvsdbg)
+│   └── c-cpp.code-snippets     # Project snippets
+├── CMakeLists.txt
+├── CMakePresets.json
+├── .clang-format
+└── .clangd
 ```
 
-- **include/**: Contains the header files (.h) for defining function prototypes, structures, and constants.
-- **lib/**: Includes external libraries or third-party dependencies that the project might rely on.
-- **src/**: Contains the source files (.c) that implement the functionality of the project.
-- **tests/**: Includes the unit test files for testing the project’s functionality. These tests can be run to ensure that the implementation works correctly.
+---
 
-## Build Process
+## Build
 
-### Windows (MSVC)
-
-On Windows, we use the **Windows Build Tools** toolchain for compiling the C source code. CMake will detect the platform and adjust the compilation flags accordingly. The project is built using `mcvs` on Windows.
-
-### Unix-like Systems (Linux/macOS)
-
-On Linux and macOS, the project can also be built using the same CMake approach. CMake will automatically detect the platform and use the appropriate compiler and flags.
-
-## Build Instructions
-
-### 1. Install Required Tools
-
-- **Windows**: Install `Windows Build Tools`
-- **Linux/macOS**: Ensure that you have `gcc`, `g++`, and `cmake` installed. You can install them using your package manager (e.g., `apt`, `brew`).
-
-### 2. Building the Project
-
-After installing the required tools, you can build the project by running `cmake` and `make` from the project root directory.
+### Configure
 
 ```bash
-mkdir build
-cd build
-cmake ..
-make
-```
-or
-```
-shortcut control+shift+p
-type run task
-select task:Build
+# Windows
+cmake --preset windows-clang-debug
+
+# Linux
+cmake --preset linux-gcc-debug
 ```
 
-or
-
-```
-shortcut control+shift+b
-```
-
-Alternatively you can set default build and test task
-
-This will compile the source code and generate an executable in the `build/` directory.
-
-### 3. Other build options
+### Build
 
 ```bash
-# Create build directory
-mkdir build
-cd build
+# Windows
+cmake --build --preset windows-clang-debug
 
-# Configure for Debug build
-cmake ..
-
-# Build Debug
-cmake --build .
-
-# Configure for Release build
-cmake -DCMAKE_BUILD_TYPE=Release ..
-
-# Build Release
-cmake --build .
+# Linux
+cmake --build --preset linux-gcc-debug
 ```
 
-### 4. Running Tests
+### Available presets
 
-You can run the unit tests with the following command:
+| Preset | OS | Compiler | Type |
+|---|---|---|---|
+| `windows-clang-debug` | Windows | clang | Debug |
+| `windows-clang-release` | Windows | clang | Release |
+| `linux-gcc-debug` | Linux | gcc | Debug |
+| `linux-gcc-release` | Linux | gcc | Release |
+
+> In VSCode, select the preset from the cmake-tools status bar and click **Configure**, then **Build**.
+
+---
+
+## Test
 
 ```bash
-cd build
-ctest
+ctest --preset windows-clang-debug
+ctest --preset linux-gcc-debug
 ```
 
-or 
+Tests are built as separate executables using the [Unity](https://github.com/ThrowTheSwitch/Unity) framework.
 
-```
-shortcut control+shift+p
-type run task
-select task:Run Tests
-```
+To add a test see [CONTRIBUTING.md](CONTRIBUTING.md).
 
-This will compile and run the test files located in the `tests/` directory.
+---
 
-### 5. Cleaning the Build
+## Debug
 
-To clean up the generated files and start from scratch, you can use the clean target:
+Debugging is configured via `launch.json` using `cppvsdbg` (Windows) or `gdb` (Linux).
 
-```bash
-make clean
-```
+In VSCode: set a breakpoint → press `F5` or use the cmake-tools debug button in the status bar.
 
-or
+---
 
-```
-shortcut control+shift+p
-type run task
-select task:Clean
-```
+## IntelliSense
 
-This will remove the `build/` directory and all compiled files.
+IntelliSense is provided by **clangd** (not the built-in cpptools engine).
+
+clangd reads `compile_commands.json` from the workspace root. This file is generated automatically by cmake-tools after each configure. It is gitignored — each developer generates their own.
+
+If squiggles appear after adding new files, run **CMake: Configure** to regenerate it.
+
+---
+
+## Snippets
+
+Type the prefix in any `.c` or `.cpp` file and press `Tab`.
+
+| Prefix | Expands to |
+|---|---|
+| `guard` | Include guard using filename |
+| `cls` | C++ class skeleton |
+| `str` | C typedef struct |
+| `enm` | `enum class` with underlying type |
+| `extc` | `extern "C"` block for C/C++ compatible headers |
+| `fori` | Index-based `for` loop |
+| `forr` | Range-based `for` loop (C++) |
+| `sw` | `switch` statement |
+| `todo` | `// TODO:` comment |
+| `banner` | Section separator comment |
+
+---
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-
-## Contributing
-
-Feel free to fork this project, submit issues, or open pull requests if you have suggestions or improvements.
+MIT — see [LICENSE](LICENSE).

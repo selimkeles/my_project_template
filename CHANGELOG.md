@@ -6,8 +6,6 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 - Initial project structure
-- Unity test framework integration
-- Basic CMake configuration
 
 ### Changed
 - None

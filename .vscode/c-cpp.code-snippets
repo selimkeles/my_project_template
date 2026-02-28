@@ -99,6 +99,24 @@
         "description": "Scoped enum with underlying type"
     },
 
+    // ── extern "C" ────────────────────────────────────────────────────────────
+    "Extern C block": {
+        "scope": "c,cpp",
+        "prefix": "extc",
+        "body": [
+            "#ifdef __cplusplus",
+            "extern \"C\" {",
+            "#endif",
+            "",
+            "$0",
+            "",
+            "#ifdef __cplusplus",
+            "}",
+            "#endif"
+        ],
+        "description": "extern \"C\" guard block for C/C++ compatible headers"
+    },
+
     // ── Comments ──────────────────────────────────────────────────────────────
     "TODO": {
         "scope": "c,cpp",
