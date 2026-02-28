@@ -1,4 +1,30 @@
 {
+    // ── Editor ──────────────────────────────────────────────────────────
+    "editor.fontLigatures": true,
+    "editor.minimap.enabled": false,
+    "editor.tabSize": 4,
+    "diffEditor.ignoreTrimWhitespace": false,
+    // ── Terminal ────────────────────────────────────
+    "terminal.integrated.enablePersistentSessions": false,
+    // ── Git ─────────────────────────────────────────────────────────────
+    "git.allowNoVerifyCommit": true,
+    "git.allowForcePush": true,
+    "git.confirmSync": false,
+    "git.blame.editorDecoration.enabled": true,
+    "git.blame.statusBarItem.enabled": true,
+    // ── Language-Specific Overrides ─────────────────────────────────────
+    "[c]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+    },
+    "[cpp]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+        "editor.wordBasedSuggestions": "off",
+        "editor.semanticHighlighting.enabled": true,
+        "editor.stickyScroll.defaultModel": "outlineModel",
+        "editor.suggest.insertMode": "replace"
+    },
     // -------------------------------------------------------------------------
     // clangd — IntelliSense, code completion, diagnostics, formatting
     // -------------------------------------------------------------------------
@@ -9,6 +35,7 @@
         "--header-insertion=iwyu",
         "--log=error"
     ],
+    "clangd.path": "C:\\Program Files\\LLVM\\bin\\clangd.exe",
     // -------------------------------------------------------------------------
     // cmake-tools
     // -------------------------------------------------------------------------
@@ -20,7 +47,8 @@
     // Debugger config used by the cmake debug button and CMake: Debug Target command
     "cmake.debugConfig": {
         "type": "cppvsdbg",
-        "console": "integratedTerminal"
+        "console": "integratedTerminal",
+        "stopAtEntry": true
     },
     // Status bar: make all workflow buttons visible
     "cmake.options.statusBarVisibility": "visible",
@@ -93,5 +121,8 @@
             "statusBarVisibility": "inherit",
             "inheritDefault": "visible"
         }
-    }
+    },
+    // ── C/C++ Extension (cpptools) ──────────────────────────────────────
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "C_Cpp.formatting": "disabled",
 }
