@@ -13,9 +13,15 @@ list(REMOVE_ITEM PROJECT_SRC_FILES
 # Usage: add_unit_test(name src1 [src2 ...])
 function(add_unit_test test_name)
     add_executable(${test_name} ${ARGN} ${PROJECT_SRC_FILES})
-    target_include_directories(${test_name} PRIVATE ${CMAKE_SOURCE_DIR}/src)
+    target_include_directories(${test_name} PRIVATE
+        ${CMAKE_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/unity/src
+    )
+    target_compile_options(${test_name} PRIVATE -Wall -Wextra -pedantic)
     add_test(NAME ${test_name} COMMAND $<TARGET_FILE:${test_name}> WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
     set_tests_properties(${test_name} PROPERTIES TIMEOUT 30)
 endfunction()
 
-add_unit_test(test_main ${CMAKE_CURRENT_SOURCE_DIR}/test.c)
+set(UNITY_SRC ${CMAKE_CURRENT_SOURCE_DIR}/unity/src/unity.c)
+
+add_unit_test(test_main          ${CMAKE_CURRENT_SOURCE_DIR}/test.c)
