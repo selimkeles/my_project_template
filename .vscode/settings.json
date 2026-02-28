@@ -82,7 +82,7 @@
             "inheritDefault": "visible"
         },
         "buildTarget": {
-            "statusBarVisibility": "hidden",
+            "statusBarVisibility": "inherit",
             "inheritDefault": "visible"
         },
         "configurePreset": {
@@ -98,7 +98,7 @@
             "inheritDefault": "visible"
         },
         "buildPreset": {
-            "statusBarVisibility": "inherit",
+            "statusBarVisibility": "hidden",
             "inheritDefault": "visible"
         },
         "configure": {
