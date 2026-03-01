@@ -25,3 +25,6 @@ endfunction()
 set(UNITY_SRC ${CMAKE_CURRENT_SOURCE_DIR}/unity/src/unity.c)
 
 add_unit_test(test_main          ${CMAKE_CURRENT_SOURCE_DIR}/test.c)
+add_unit_test(test_circ_buff     ${CMAKE_CURRENT_SOURCE_DIR}/unit/test_circ_buff.cpp     ${UNITY_SRC})
+add_unit_test(test_bit_manipulator ${CMAKE_CURRENT_SOURCE_DIR}/unit/test_bit_manipulator.cpp ${UNITY_SRC})
+add_unit_test(test_traffic_light   ${CMAKE_CURRENT_SOURCE_DIR}/unit/test_traffic_light.cpp   ${UNITY_SRC})

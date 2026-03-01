@@ -1,0 +1,22 @@
+Task 1: Circular Buffer (Ring Buffer)
+Implement a generic, fixed-capacity circular buffer in C++. It should be a template class.
+
+Requirements:
+
+push(T val) — add element; overwrites oldest if full
+pop(T& out) — remove oldest element; return false if empty
+peek(T& out) — read oldest without removing; return false if empty
+size() — number of elements currently stored
+full() / empty() — state queries
+Fixed capacity set at construction time (or compile-time via template parameter — your choice, but justify it)
+No dynamic allocation inside the buffer after construction
+Thread safety is not required
+Constraints:
+
+No std::queue, std::deque, or similar containers
+Raw array or std::array as backing store only
+Test it with at least:
+
+Push beyond capacity — verify overwrite behavior
+Pop from empty — verify false return
+Interleaved push/pop — verify FIFO ordering

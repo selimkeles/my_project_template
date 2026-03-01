@@ -1,0 +1,34 @@
+Task 2: Bit Manipulation Utility
+This is the bread and butter of embedded development. Every hardware register you'll ever touch is controlled with these operations.
+
+Implement the following six functions operating on a uint32_t:
+
+
+uint32_t setBit    (uint32_t reg, int pos);
+uint32_t clearBit  (uint32_t reg, int pos);
+uint32_t toggleBit (uint32_t reg, int pos);
+bool     testBit   (uint32_t reg, int pos);
+
+uint32_t setBitfield(uint32_t reg, int start, int width, uint32_t val);
+uint32_t getBitfield(uint32_t reg, int start, int width);
+Definitions:
+
+pos — zero-indexed bit position (0 = LSB)
+start — lowest bit of the field, width — how many bits wide
+setBitfield writes val into bits [start, start+width-1] without touching other bits
+getBitfield extracts and returns just those bits (right-aligned, so shifted down)
+Test it with:
+
+
+reg = 0x00000000
+setBit(reg, 3)           → 0x00000008
+clearBit(0xFF, 3)        → 0xF7
+toggleBit(0xFF, 3)       → 0xF7, toggleBit again → 0xFF
+setBitfield(0, 4, 3, 5)  → bits 4-6 set to 0b101 → 0x00000050
+getBitfield(0x50, 4, 3)  → 5
+Constraints:
+
+No loops, no lookup tables — pure bitwise operators only: << >> | & ~ ^
+Plain functions, no class needed
+Use <cstdint> for uint32_t
+Write it in src/main.cpp or a new file. The first four are straightforward — the bitfield ones are the real exercise.

@@ -1,0 +1,33 @@
+Task 3: Finite State Machine (FSM)
+State machines are everywhere in embedded firmware — debouncing buttons, parsing protocols, managing device modes. This is a near-guaranteed interview topic.
+
+Implement a traffic light FSM:
+
+States: RED → GREEN → YELLOW → RED → ...
+
+
+RED    (5000 ms) ──→ GREEN
+GREEN  (4000 ms) ──→ YELLOW
+YELLOW (1000 ms) ──→ RED
+Requirements:
+
+enum class for states (not plain enum)
+tick(int elapsed_ms) — advances internal time, triggers transitions
+getState() — returns current state
+onEnter callback per state — called once each time a state is entered
+Durations configurable per state, not hardcoded in tick()
+Constraints:
+
+No sleep or real timers — tick() is fed elapsed time externally (this is how FSMs work on embedded: the scheduler calls tick)
+No std::function or lambdas required — plain function pointers are fine
+Test it with:
+
+
+tick(5000) → transitions RED → GREEN, prints "Entering GREEN"
+tick(4000) → transitions GREEN → YELLOW, prints "Entering YELLOW"
+tick(500)  → stays YELLOW
+tick(500)  → transitions YELLOW → RED, prints "Entering RED"
+Think about: where do the state durations and onEnter actions live? In the states themselves, or in the FSM class? There's no single right answer — justify your design.
+
+Write it in src/main.cpp or a new directory. Show me when ready.
+
