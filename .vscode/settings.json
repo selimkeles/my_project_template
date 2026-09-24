@@ -35,94 +35,14 @@
         "--header-insertion=iwyu",
         "--log=error"
     ],
-    "clangd.path": "C:\\Program Files\\LLVM\\bin\\clangd.exe",
     // -------------------------------------------------------------------------
-    // cmake-tools
+    // clangd + Bear
     // -------------------------------------------------------------------------
-    // Copy compile_commands.json to the workspace root after each configure
-    // so clangd can locate it without a hardcoded path in .clangd
-    "cmake.copyCompileCommands": "${workspaceFolder}/compile_commands.json",
-    // Prefer CMakePresets.json when it exists
-    "cmake.useCMakePresets": "auto",
-    // Debugger config used by the cmake debug button and CMake: Debug Target command
-    "cmake.debugConfig": {
-        "type": "cppvsdbg",
-        "console": "integratedTerminal",
-        "stopAtEntry": true
-    },
-    // Status bar: make all workflow buttons visible
-    "cmake.options.statusBarVisibility": "visible",
-    "cmake.options.advanced": {
-        "build": {
-            "statusBarVisibility": "inherit",
-            "inheritDefault": "visible"
-        },
-        "launch": {
-            "statusBarVisibility": "inherit",
-            "inheritDefault": "visible"
-        },
-        "debug": {
-            "statusBarVisibility": "inherit",
-            "inheritDefault": "visible"
-        },
-        "cpack": {
-            "statusBarVisibility": "hidden",
-            "inheritDefault": "visible"
-        },
-        "workflow": {
-            "statusBarVisibility": "hidden",
-            "inheritDefault": "visible"
-        },
-        "workflowPreset": {
-            "statusBarVisibility": "hidden",
-            "inheritDefault": "visible"
-        },
-        "packagePreset": {
-            "statusBarVisibility": "hidden",
-            "inheritDefault": "visible"
-        },
-        "buildTarget": {
-            "statusBarVisibility": "inherit",
-            "inheritDefault": "visible"
-        },
-        "configurePreset": {
-            "statusBarVisibility": "hidden",
-            "inheritDefault": "visible"
-        },
-        "testPreset": {
-            "statusBarVisibility": "hidden",
-            "inheritDefault": "visible"
-        },
-        "launchTarget": {
-            "statusBarVisibility": "inherit",
-            "inheritDefault": "visible"
-        },
-        "buildPreset": {
-            "statusBarVisibility": "hidden",
-            "inheritDefault": "visible"
-        },
-        "configure": {
-            "statusBarVisibility": "inherit",
-            "inheritDefault": "visible"
-        },
-        "ctest": {
-            "statusBarVisibility": "inherit",
-            "inheritDefault": "visible"
-        },
-        "kit": {
-            "statusBarVisibility": "inherit",
-            "inheritDefault": "visible"
-        },
-        "variant": {
-            "statusBarVisibility": "inherit",
-            "inheritDefault": "visible"
-        },
-        "folder": {
-            "statusBarVisibility": "inherit",
-            "inheritDefault": "visible"
-        }
-    },
-    // ── C/C++ Extension (cpptools) ──────────────────────────────────────
+    // clangd reads compile_commands.json from the workspace root. Generate it
+    // with `make bear` (or `bear -- make`) whenever sources or flags change.
+    // -------------------------------------------------------------------------
+    // C/C++ Extension (cpptools)
+    // -------------------------------------------------------------------------
     "C_Cpp.intelliSenseEngine": "disabled",
     "C_Cpp.formatting": "disabled",
 }

@@ -1,29 +1,25 @@
 # C/C++ Project Template
 
-A CMake preset-based C/C++ project template for VSCode with clangd IntelliSense, Unity unit testing, and Ninja builds.
+A traditional GNU Make-based C/C++ project template for VSCode with clangd IntelliSense (via **Bear**), Unity unit testing, and a simple, predictable build.
 
 ---
 
 ## Requirements
 
-### Windows
-| Tool | Purpose | PATH required |
-|---|---|---|
-| [LLVM](https://releases.llvm.org/) | clang, clang++, llvm-rc, clangd | Yes — add `LLVM/bin` |
-| [Ninja](https://ninja-build.org/) | Build system | Yes |
-| [CMake](https://cmake.org/) 3.20+ | Build configuration | Yes |
-
 ### Linux
+
 | Tool | Purpose |
 |---|---|
+| `make` | Build system |
 | `gcc`, `g++` | Compiler |
-| `ninja-build` | Build system |
-| `cmake` 3.20+ | Build configuration |
+| `bear` | Generates `compile_commands.json` for clangd |
 
 ```bash
 # Ubuntu/Debian
-sudo apt install gcc g++ ninja-build cmake
+sudo apt install make gcc g++ bear
 ```
+
+> Windows: [MinGW-w64](https://www.mingw-w64.org/) + [MSYS2 make](https://www.msys2.org/) work with this Makefile. `bear` is optional on any platform where you already have a `compile_commands.json`.
 
 ---
 
@@ -32,21 +28,20 @@ sudo apt install gcc g++ ninja-build cmake
 ```
 .
 ├── src/                        # Source files — headers live next to sources
-│   └── MyModule/
-│       ├── myModule.h
-│       └── myModule.cpp
+│   ├── MyModule/
+│   │   ├── myModule.h
+│   │   └── myModule.cpp
+│   └── main.cpp                # Application entry point
 ├── tests/
 │   ├── unity/                  # Unity test framework (submodule)
-│   ├── unit/                   # Unit test files
-│   │   └── test_myModule.cpp
-│   ├── CMakeLists.txt
-│   └── test.c                  # Test runner entry point
+│   ├── test.c                  # Test runner entry point
+│   └── ...
 ├── .vscode/
-│   ├── settings.json           # clangd + cmake-tools config
-│   ├── launch.json             # Debug config (cppvsdbg)
+│   ├── settings.json           # clangd config
+│   ├── tasks.json              # make build/test/bear tasks
+│   ├── launch.json             # Debug config (cppvsdbg / gdb)
 │   └── c-cpp.code-snippets     # Project snippets
-├── CMakeLists.txt
-├── CMakePresets.json
+├── Makefile
 ├── .clang-format
 └── .clangd
 ```
@@ -55,67 +50,61 @@ sudo apt install gcc g++ ninja-build cmake
 
 ## Build
 
-### Configure
+All source files under `src/` are discovered recursively, so new modules are picked up automatically — no Makefile edits needed.
 
 ```bash
-# Windows
-cmake --preset windows-clang-debug
-
-# Linux
-cmake --preset linux-gcc-debug
+make            # build build/bin/TemplateProject
+make -j4        # parallel build
+make run        # build and run
+make test       # build and run the Unity tests
+make clean      # remove build artifacts
 ```
 
-### Build
+Override the toolchain on the command line:
 
 ```bash
-# Windows
-cmake --build --preset windows-clang-debug
-
-# Linux
-cmake --build --preset linux-gcc-debug
+make CC=clang CXX=clang++
 ```
 
-### Available presets
+---
 
-| Preset | OS | Compiler | Type |
-|---|---|---|---|
-| `windows-clang-debug` | Windows | clang | Debug |
-| `windows-clang-release` | Windows | clang | Release |
-| `linux-gcc-debug` | Linux | gcc | Debug |
-| `linux-gcc-release` | Linux | gcc | Release |
+## IntelliSense (clangd + Bear)
 
-> In VSCode, select the preset from the cmake-tools status bar and click **Configure**, then **Build**.
+IntelliSense is provided by **clangd** (not the built-in cpptools engine). clangd reads `compile_commands.json` from the workspace root.
+
+Generate it with Bear once (or after changing sources / flags):
+
+```bash
+make bear
+```
+
+`make bear` performs a clean rebuild wrapped in Bear so every translation unit is recorded (including tests). The resulting `compile_commands.json` is gitignored — each developer generates their own.
+
+Alternatively, wrap any build manually:
+
+```bash
+bear -- make
+```
+
+If squiggles appear after adding new files, re-run `make bear` (or `bear -- make`).
 
 ---
 
 ## Test
 
 ```bash
-ctest --preset windows-clang-debug
-ctest --preset linux-gcc-debug
+make test
 ```
 
-Tests are built as separate executables using the [Unity](https://github.com/ThrowTheSwitch/Unity) framework.
-
-To add a test see [CONTRIBUTING.md](CONTRIBUTING.md).
+Tests use the [Unity](https://github.com/ThrowTheSwitch/Unity) framework. The test binary links every `src/` file except `main` plus the Unity sources. To add a test see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
 ## Debug
 
-Debugging is configured via `launch.json` using `cppvsdbg` (Windows) or `gdb` (Linux).
+Debugging is configured via `launch.json` using `cppvsdbg` (Windows) or `gdb` (Linux). The `make build` task runs automatically before launch.
 
-In VSCode: set a breakpoint → press `F5` or use the cmake-tools debug button in the status bar.
-
----
-
-## IntelliSense
-
-IntelliSense is provided by **clangd** (not the built-in cpptools engine).
-
-clangd reads `compile_commands.json` from the workspace root. This file is generated automatically by cmake-tools after each configure. It is gitignored — each developer generates their own.
-
-If squiggles appear after adding new files, run **CMake: Configure** to regenerate it.
+In VSCode: set a breakpoint → press `F5`.
 
 ---
 

@@ -8,7 +8,9 @@ All notable changes to this project will be documented in this file.
 - Initial project structure
 
 ### Changed
-- None
+- Replaced CMake with a traditional GNU Make build system
+- Added `make bear` target to generate `compile_commands.json` for clangd
+- Moved test runner to Unity framework
 
 ### Deprecated
 - None

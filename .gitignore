@@ -30,8 +30,7 @@ luna_assignment
 # Debug files
 *.dSYM/
 
-# Make files
-Makefile
+# Make files / build tracking
 *.deps
 *.user
 *.suo
@@ -59,6 +58,9 @@ build/
 Debug/
 Release/
 Testing/
+
+# Editor caches
+.cache/
 
 # clangd
 compile_commands.json
