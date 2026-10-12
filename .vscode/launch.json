@@ -2,22 +2,28 @@
     // Use IntelliSense to learn about possible attributes.
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    //
+    // Four configurations, but each OS only ever shows its own pair:
+    //
+    //   Linux / macOS   Debug (gdb)    cppdbg  (GDB/MI)
+    //   Windows         Debug (MSVC)   cppvsdbg (Visual Studio debugger)
+    //
+    // How the hiding works: a "windows" / "linux" / "osx" section is merged over
+    // the configuration before the dropdown is built, and VSCode drops every
+    // entry whose presentation.hidden is true. VSCode also does NOT filter the
+    // members of a compound by OS (it starts every one it is given), which is
+    // why there are no "compounds" here - one compound cannot serve both
+    // platforms, and hiding does the job on its own.
+    //
+    // The names must stay unique: launch.json is looked up with find(), so two
+    // configurations sharing a name would always resolve to the first one.
+    //
+    // "type" cannot live in an OS section (it picks the debug adapter), hence
+    // one configuration per debugger instead of one per target.
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug (Windows)",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/build/bin/TemplateProject.exe",
-            "args": [],
-            "stopAtEntry": true,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "console": "integratedTerminal",
-            "preLaunchTask": "make build"
-        },
-        {
-            "name": "Debug (Linux / GDB)",
+            "name": "Debug (gdb)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/bin/TemplateProject",
@@ -34,22 +40,45 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "make build"
+            "preLaunchTask": "build",
+            "presentation": {
+                "group": "1-run",
+                "order": 1
+            },
+            "windows": {
+                "presentation": {
+                    "hidden": true
+                }
+            }
         },
         {
-            "name": "Test (Windows)",
+            "name": "Debug (MSVC)",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/bin/test_TemplateProject.exe",
+            "program": "${workspaceFolder}/build/bin/TemplateProject.exe",
             "args": [],
-            "stopAtEntry": true,
+            "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
             "console": "integratedTerminal",
-            "preLaunchTask": "make test-build"
+            "preLaunchTask": "build",
+            "presentation": {
+                "group": "1-run",
+                "order": 1
+            },
+            "linux": {
+                "presentation": {
+                    "hidden": true
+                }
+            },
+            "osx": {
+                "presentation": {
+                    "hidden": true
+                }
+            }
         },
         {
-            "name": "Test (Linux / GDB)",
+            "name": "Test (gdb)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/bin/test_TemplateProject",
@@ -66,7 +95,42 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "make test-build"
+            "preLaunchTask": "build-test",
+            "presentation": {
+                "group": "2-test",
+                "order": 1
+            },
+            "windows": {
+                "presentation": {
+                    "hidden": true
+                }
+            }
+        },
+        {
+            "name": "Test (MSVC)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/bin/test_TemplateProject.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal",
+            "preLaunchTask": "build-test",
+            "presentation": {
+                "group": "2-test",
+                "order": 1
+            },
+            "linux": {
+                "presentation": {
+                    "hidden": true
+                }
+            },
+            "osx": {
+                "presentation": {
+                    "hidden": true
+                }
+            }
         }
     ]
 }

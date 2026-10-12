@@ -38,8 +38,8 @@ sudo apt install make gcc g++ bear
 │   └── ...
 ├── .vscode/
 │   ├── settings.json           # clangd config
-│   ├── tasks.json              # make build/test/bear tasks
-│   ├── launch.json             # Debug config (cppvsdbg / gdb)
+│   ├── tasks.json              # make tasks: build / build-test / build-bear / clean-build / run
+│   ├── launch.json             # Debug config (gdb / cppvsdbg) + run|test compounds
 │   └── c-cpp.code-snippets     # Project snippets
 ├── Makefile
 ├── .clang-format
@@ -53,11 +53,15 @@ sudo apt install make gcc g++ bear
 All source files under `src/` are discovered recursively, so new modules are picked up automatically — no Makefile edits needed.
 
 ```bash
-make            # build build/bin/TemplateProject
-make -j4        # parallel build
-make run        # build and run
-make test       # build and run the Unity tests
-make clean      # remove build artifacts
+make              # build build/bin/TemplateProject
+make -j4          # parallel build
+make run          # build and run
+make test         # build and run the Unity tests
+make test-build   # build the test binary only (for debugging)
+make clean-build  # remove build artifacts, then rebuild from scratch
+make clean-test   # remove build artifacts, then rebuild the test binary
+make bear         # rebuild under Bear -> compile_commands.json
+make clean        # remove build artifacts
 ```
 
 Override the toolchain on the command line:
@@ -65,6 +69,20 @@ Override the toolchain on the command line:
 ```bash
 make CC=clang CXX=clang++
 ```
+
+### VSCode tasks
+
+Every target above is also a task in `.vscode/tasks.json`. Run them with `Ctrl+Shift+B` (default: `build`) or through **Tasks: Run Task...** in the Command Palette.
+
+| Task | Runs | Produces |
+|---|---|---|
+| `build` | `make -j build` | `build/bin/TemplateProject` |
+| `build-test` | `make -j test-build` | `build/bin/test_TemplateProject` |
+| `build-bear` | `make bear` | `compile_commands.json` for clangd |
+| `clean-build` | `make clean-build` | fresh `build/bin/TemplateProject` |
+| `run` | `make run` | build + run in the terminal |
+| `test` | `make test` | build + run the Unity tests |
+| `clean` | `make clean` | removes `build/` |
 
 ---
 
@@ -102,9 +120,30 @@ Tests use the [Unity](https://github.com/ThrowTheSwitch/Unity) framework. The te
 
 ## Debug
 
-Debugging is configured via `launch.json` using `cppvsdbg` (Windows) or `gdb` (Linux). The `make build` task runs automatically before launch.
+Debugging is configured via `launch.json`. Each configuration pre-launches the matching make task (`build` or `build-test`), so the binary is always up to date.
 
-In VSCode: set a breakpoint → press `F5`.
+In VSCode: set a breakpoint → pick a configuration → press `F5`.
+
+| Entry | Shown on | Debugger | Debugs |
+|---|---|---|---|
+| `Debug (gdb)` | Linux, macOS | `cppdbg` (GDB/MI) | `build/bin/TemplateProject` |
+| `Debug (MSVC)` | Windows | `cppvsdbg` | `build/bin/TemplateProject.exe` |
+| `Test (gdb)` | Linux, macOS | `cppdbg` (GDB/MI) | `build/bin/test_TemplateProject` |
+| `Test (MSVC)` | Windows | `cppvsdbg` | `build/bin/test_TemplateProject.exe` |
+
+Each configuration hides itself on the OS it does not run on, so the dropdown only ever shows the two entries for your platform:
+
+```jsonc
+"presentation": { "group": "1-run", "order": 1 },   // group + order in the dropdown
+"windows": { "presentation": { "hidden": true } }   // hidden on Linux/macOS
+```
+
+Notes:
+
+- `type` cannot be placed in an OS section — it selects the debug adapter — hence one configuration per debugger rather than one per target. Names must also stay unique: `launch.json` is looked up with `find()`, so two configurations sharing a name always resolve to the first.
+- The two debuggers take different properties: `cppdbg` uses `MIMode` / `setupCommands` / `externalConsole`, `cppvsdbg` uses `console: integratedTerminal` and has no `MIMode`.
+- No `compounds` are needed. A compound starts every configuration listed in it and VSCode does not filter those by OS, so a single compound could not serve both platforms.
+- Running without the debugger is the `run` task (`make run`) in the terminal.
 
 ---
 

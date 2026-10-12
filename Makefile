@@ -8,6 +8,8 @@
 #    make test     # build and run the Unity unit tests
 #    make test-build  # build the test binary only (for debugging)
 #    make run      # run the main executable
+#    make clean-build  # remove build artifacts, then rebuild from scratch
+#    make clean-test   # remove build artifacts, then rebuild the test binary
 #    make bear     # rebuild under bear to emit compile_commands.json (clangd)
 #    make clean    # remove all build artifacts
 #    make help     # show this help
@@ -67,7 +69,7 @@ LINKER    := $(if $(SRC_CXX),$(CXX),$(CC))
 
 # --- Rules ------------------------------------------------------------------
 
-.PHONY: all build test test-build run bear clean help
+.PHONY: all build test test-build run clean-build clean-test bear clean help
 
 all: build
 
@@ -87,6 +89,16 @@ bear:
 	$(RM) compile_commands.json
 	bear --output compile_commands.json -- $(MAKE) clean build test
 
+# From-scratch rebuilds. Sub-makes are invoked sequentially so the clean can
+# never race the build (a plain `clean build` with -j would).
+clean-build:
+	$(MAKE) clean
+	$(MAKE) -j build
+
+clean-test:
+	$(MAKE) clean
+	$(MAKE) -j test-build
+
 clean:
 	$(RM) -r $(BUILD_DIR)
 
@@ -96,6 +108,8 @@ help:
 	@echo '  make test       build and run the Unity unit tests'
 	@echo '  make test-build build the test binary only (for debugging)'
 	@echo '  make run        run the main executable'
+	@echo '  make clean-build  clean, then rebuild the main executable'
+	@echo '  make clean-test   clean, then rebuild the test binary'
 	@echo '  make bear       rebuild under bear -> compile_commands.json for clangd'
 	@echo '  make clean      remove build artifacts'
 	@echo 'Overridable variables: CC, CXX, CFLAGS, CXXFLAGS, LDFLAGS, LDLIBS'

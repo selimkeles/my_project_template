@@ -1,12 +1,25 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558 for the documentation
+    // Task labels here are the single source of truth for both this file and
+    // `preLaunchTask` in launch.json.
+    //
+    //   build        make build          -> build/bin/TemplateProject
+    //   build-test   make test-build     -> build/bin/test_TemplateProject
+    //   build-bear   make bear           -> compile_commands.json (clangd)
+    //   clean-build  make clean-build    -> clean, then full rebuild
+    //   run          make run            -> build + run in the terminal
+    //   test         make test           -> build + run the Unity tests
+    //   clean        make clean          -> remove build/
+    //
+    // Run any of them with Ctrl+Shift+B (default: build) or
+    // "Tasks: Run Task..." from the Command Palette.
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "make build",
+            "label": "build",
+            "detail": "make build",
             "type": "shell",
             "command": "make",
-            "args": ["-j"],
+            "args": ["-j", "build"],
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -14,51 +27,96 @@
             "problemMatcher": ["$gcc"],
             "presentation": {
                 "reveal": "always",
-                "panel": "shared"
+                "panel": "shared",
+                "clear": true
             }
         },
         {
-            "label": "make test",
+            "label": "build-test",
+            "detail": "make test-build",
             "type": "shell",
             "command": "make",
-            "args": ["test"],
-            "group": "test",
-            "problemMatcher": ["$gcc"],
-            "presentation": {
-                "reveal": "always",
-                "panel": "shared"
-            }
-        },
-        {
-            "label": "make test-build",
-            "type": "shell",
-            "command": "make",
-            "args": ["test-build"],
+            "args": ["-j", "test-build"],
             "group": "build",
             "problemMatcher": ["$gcc"],
             "presentation": {
                 "reveal": "always",
-                "panel": "shared"
+                "panel": "shared",
+                "clear": true
             }
         },
         {
-            "label": "make bear",
+            "label": "build-bear",
+            "detail": "make bear — clean rebuild wrapped in Bear, regenerates compile_commands.json for clangd",
             "type": "shell",
             "command": "make",
             "args": ["bear"],
             "problemMatcher": [],
             "presentation": {
                 "reveal": "always",
-                "panel": "shared"
-            },
-            "detail": "Rebuild under Bear to generate compile_commands.json for clangd"
+                "panel": "shared",
+                "clear": true
+            }
         },
         {
-            "label": "make clean",
+            "label": "clean-build",
+            "detail": "make clean-build",
+            "type": "shell",
+            "command": "make",
+            "args": ["clean-build"],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": ["$gcc"],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            }
+        },
+        {
+            "label": "run",
+            "detail": "make run",
+            "type": "shell",
+            "command": "make",
+            "args": ["run"],
+            "problemMatcher": ["$gcc"],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            }
+        },
+        {
+            "label": "test",
+            "detail": "make test",
+            "type": "shell",
+            "command": "make",
+            "args": ["test"],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            }
+        },
+        {
+            "label": "clean",
+            "detail": "make clean",
             "type": "shell",
             "command": "make",
             "args": ["clean"],
-            "problemMatcher": []
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            }
         }
     ]
 }
